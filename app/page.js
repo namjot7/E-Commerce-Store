@@ -1,10 +1,12 @@
+"use client"
 import Layout from "./components/Layout"
 import HomePageContent from "./components/HomePageContent"
+import { useState } from "react";
 
 export default async function Home({ productsData }) {
 
-  // const [productsInfo, setProductsInfo] = useState([]) // array of objects
-  // console.log(productsInfo);
+  const [productsInfo, setProductsInfo] = useState([]) // array of objects
+  console.log(productsInfo);
 
   // Load all the products info when page is loaded (Client side fetch)
   // useEffect(() => {
@@ -14,7 +16,7 @@ export default async function Home({ productsData }) {
   // }, [])
 
   // Fetching the data using Server (faster load time)
-  let data = await fetch('http://localhost:3000//api/products')
+  let data = await fetch('http://localhost:3000/api/products')
   let products = await data.json()
   // console.log(products);
 

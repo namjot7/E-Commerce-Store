@@ -13,11 +13,6 @@ const Cart = () => {
     const data = productsInfo.filter(product => selectedProducts.includes(product._id)) // unique values
     // console.log(data);
 
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [address, setAddress] = useState('')
-    const [city, setCity] = useState("")
-
     // Depends on SelectedProducts
     useEffect(() => {
         const uniqIds = [... new Set(selectedProducts)] // remove duplicate Ids
@@ -52,43 +47,15 @@ const Cart = () => {
     const decreaseQty = (id) => {
         const position = selectedProducts.indexOf(id)
         if (position != -1) {
-            const newSelectedProducts = selectedProducts.filter((value, idx) => idx != position)
-            // console.log(newSelectedProducts);
-            setSelectedProducts(newSelectedProducts)
-            localStorage.setItem('cart', JSON.stringify(newSelectedProducts))
+            let updatedCart = selectedProducts.filter((value, idx) => idx != position)
+            // console.log(updatedCart);
+            setSelectedProducts(updatedCart)
+            localStorage.setItem('cart', JSON.stringify(updatedCart))
         }
-    }
-    const handleCheckout = async (e) => {
-        e.preventDefault();
-
-        // Collect the form data
-        const formData = {
-            name,
-            email,
-            address,
-            city,
-            productsIds: selectedProducts
-        };
-
-        // POST Data to API
-        const data = await fetch('/api/checkout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-        const response = await data.json();
-        // console.log(response);
-
-        // Redirect the user to the Stripe checkout page
-        if (response.url) window.location.href = response.url
-        else console.error('Error creating checkout session:', response.message);
     }
 
     return (
         <Layout>
-
             {/* Cart is empty */}
             {!selectedProducts.length && <div>
                 <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
@@ -136,6 +103,7 @@ const Cart = () => {
                     <div>
                         <p className="text-xl ">{product.name}</p>
                         <p className="text-sm leading-5 text-gray-400">{product.description}</p>
+                        {/* Delete product button */}
                         {/* <button className='py-0.5 w-full my-1 px-3 text-sm rounded-xl mt-5'><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#cc0c39"><path d="M272-96q-50.94 0-85.97-35.03T151-217v-489H89v-121h250v-61h281v61h252v121h-62v489q0 50.94-35.03 85.97T689-96H272Zm75-188.5h98v-355h-98v355Zm169 0h98v-355h-98v355Z" /></svg></button> */}
                     </div>
                     <div className='flex flex-col items-end justify-between py-5'>
@@ -150,7 +118,7 @@ const Cart = () => {
             </div >
             ))}
             {selectedProducts.length && <div>
-                <div className="total mt-14 text-lg mx-auto w-3/4 hidden">
+                <div className="total mt-14 text-lg mx-auto w-3/4">
                     <div className='flex my-2'>
                         <h2 className='grow text-gray-400'>Subtotal:</h2>
                         <h2>${subtotal}</h2>
@@ -163,22 +131,9 @@ const Cart = () => {
                         <h2 className='grow text-gray-400'>Total:</h2>
                         <h2>${total}</h2>
                     </div>
-                    <div className=' text-center'><button className='bg-yellow-400 w-[300px] mx-auto my-8 text-black rounded-md py-1 px-2'>Pay ${total}</button></div>
+                    <div className=' text-center'><a href='/checkout' className='block bg-yellow-400 hover:bg-yellow-500 w-[300px] mx-auto my-8 text-black rounded-md py-1 px-2'>Pay ${total}</a></div>
                 </div>
 
-                {/* Form */}
-                <div className='mt-4 w-[320px] mx-auto'>
-                    <form onSubmit={e => handleCheckout(e)}>
-                        <h2 className='text-xl text-center mb-2 capitalize'>Please Enter Your Address</h2>
-                        <div><input name="name" value={name} onChange={e => setName(e.target.value)} className='bg-gray-800 w-full my-1 px-3 py-1.5 rounded-md outline-none' type="text" placeholder='Full Name' id="" /></div>
-                        <div><input name="email" value={email} onChange={e => setEmail(e.target.value)} className='bg-gray-800 w-full my-1 px-3 py-1.5 rounded-md outline-none' type="text" placeholder='Email Address' id="" /></div>
-                        <div><input name="address" value={address} onChange={e => setAddress(e.target.value)} className='bg-gray-800 w-full my-1 px-3 py-1.5 rounded-md outline-none' type="text" placeholder='Street Name' id="" /></div>
-                        <div><input name="city" value={city} onChange={e => setCity(e.target.value)} className='bg-gray-800 w-full my-1 px-3 py-1.5 rounded-md outline-none' type="text" placeholder='City' id="" /></div>
-                        {/* <input type="hidden" name="products" value={JSON.stringify(selectedProducts)} /> */}
-                        {/* <input type="hidden" name="products" value={selectedProducts.join(',')} /> */}
-                        <button type="submit" role="link" className='bg-yellow-400 w-full mx-auto mt-3 text-black rounded-md py-1 px-2'>Checkout</button>
-                    </form>
-                </div>
             </div>
             }
         </Layout>

@@ -1,9 +1,11 @@
 
+// Go to http://localhost:3000/api/products to test console.log()
+
 import { initMongoose } from "@/lib/mongoose";
 import Product from "@/model/product";
 
-export async function findAllProducts(params) {
-    return Product.find().exec();
+export async function findAllProducts() {
+    return Product.find().exec(); // executes the query to find products
 }
 export async function GET(req, res) {
     await initMongoose();
@@ -35,11 +37,12 @@ export async function GET(req, res) {
         //         '_id': { $in: idsArray }
         //     }).exec())
     }
-    else {
-        return new Response(JSON.stringify(products), {
-            headers: { 'Content-Type': 'application/json' },
-        })
-        // res.json(products) // not working
-    }
+    // Can add the else for more security
+    // else {
+    //     return new Response(JSON.stringify(products), {
+    //         headers: { 'Content-Type': 'application/json' },
+    //     })
+    //     // res.json(products) // not working
+    // }
 
 }

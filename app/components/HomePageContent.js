@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react'
-import Product from './product'
+import Product from './Product'
 
 const HomePageContent = ({ products }) => {
 
@@ -22,7 +22,8 @@ const HomePageContent = ({ products }) => {
     return (
         <div>
             <div className="w-4/5 md:w-[600px]  mx-auto">
-                <input value={phrase} onChange={e => setPhrase(e.target.value)} className="bg-gray-800 w-full rounded-full px-4 py-2 outline-none" type="text" placeholder="Search" />
+                <input value={phrase} onChange={e => setPhrase(e.target.value)} type="text" placeholder="Search"
+                    className="bg-gray-800 w-full rounded-full px-4 py-2 outline-none" />
             </div>
             {/* Display Products w.r.t categories */}
             {categories.map(categoryName => {

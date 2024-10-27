@@ -10,4 +10,5 @@ const orderSchema = new Schema({
 }, { timestamps: true })
 
 const Order = models?.Order || model("Order", orderSchema) // check if orderSchema is already created
+
 export default Order;
