@@ -1,4 +1,3 @@
-
 // Go to http://localhost:3000/api/products to test console.log()
 
 import { initMongoose } from "@/lib/mongoose";

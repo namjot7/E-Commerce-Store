@@ -20,7 +20,7 @@ const Cart = () => {
 
         fetch("/api/products?ids=" + uniqIds.join(","))// create a string with all array elements
             .then(res => res.json())
-            .then(json => setProductsInfo(json))
+            .then(data => setProductsInfo(data))
     }, [selectedProducts])
 
     // Sum the prices of all products in the cart

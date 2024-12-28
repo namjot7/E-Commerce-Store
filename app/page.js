@@ -1,12 +1,12 @@
-"use client"
+
 import Layout from "./components/Layout"
-import HomePageContent from "./components/HomePageContent"
-import { useState } from "react";
+import Products from "./components/Products"
+// import { useState } from "react";
 
 export default async function Home({ productsData }) {
 
-  const [productsInfo, setProductsInfo] = useState([]) // array of objects
-  console.log(productsInfo);
+  // const [productsInfo, setProductsInfo] = useState([]) // array of objects
+  // console.log(productsInfo);
 
   // Load all the products info when page is loaded (Client side fetch)
   // useEffect(() => {
@@ -22,7 +22,7 @@ export default async function Home({ productsData }) {
 
   return (
     <Layout>
-      <HomePageContent products={products} />
+      <Products products={products} />
     </Layout>
   );
 }

@@ -1,8 +1,8 @@
 "use client"
 import React, { useState } from 'react'
-import Product from './Product'
+import ProductCard from './ProductCard'
 
-const HomePageContent = ({ products }) => {
+const Products = ({ products }) => {
 
     const [phrase, setPhrase] = useState("")
 
@@ -34,7 +34,7 @@ const HomePageContent = ({ products }) => {
 
                         <div className="bg-gray-800 flex hid-scroll">
                             {products.filter(item => item.category == categoryName).map(productInfo => {
-                                return <Product key={productInfo._id} {...productInfo} />
+                                return <ProductCard key={productInfo._id} {...productInfo} />
                             })}
                         </div>
                     </div>
@@ -44,4 +44,4 @@ const HomePageContent = ({ products }) => {
     )
 }
 
-export default HomePageContent;
+export default Products;
